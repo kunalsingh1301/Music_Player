@@ -29,7 +29,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/shuffle_btn"
                 android:textColor="#AD19C6"
-                android:text="Shuffle"
+                android:text="@string/shuffle_btn"
                 android:textStyle="bold"
                 android:shadowColor="@color/text_shadow"
                 android:shadowDx="-2"

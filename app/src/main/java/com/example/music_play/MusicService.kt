@@ -75,6 +75,10 @@ class MusicService: Service() {
             PlayerActivity.isPlaying = true
             PlayerActivity.binding.playpauseBtnPA.setIconResource(R.drawable.pause_icon)
             PlayerActivity.musicService!!.shownotification(R.drawable.pause_icon)
+            PlayerActivity.binding.tvseekbarstart.text = formatduration(PlayerActivity.musicService!!.mediaPlayer!!.currentPosition.toLong())
+            PlayerActivity.binding.tvseekbarend.text = formatduration(PlayerActivity.musicService!!.mediaPlayer!!.duration.toLong())
+            PlayerActivity.binding.seekbarPA.progress = 0
+            PlayerActivity.binding.seekbarPA.max = PlayerActivity.musicService!!.mediaPlayer!!.duration
         }catch (e:Exception){return}
     }
 }
