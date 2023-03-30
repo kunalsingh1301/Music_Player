@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.music_play"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -52,4 +52,5 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.15.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
+    implementation 'androidx.media:media:1.6.0'
 }
