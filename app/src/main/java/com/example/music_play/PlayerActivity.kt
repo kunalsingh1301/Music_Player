@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.music_play.databinding.ActivityPlayerBinding
@@ -22,6 +23,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         var musicService:MusicService? = null
         @SuppressLint("StaticFieldLeak")
         lateinit var binding: ActivityPlayerBinding
+        var repeat:Boolean = false
     }
 
 
@@ -57,6 +59,17 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
         })
+
+        binding.repeatBtnPA.setOnClickListener(){
+            if (!repeat){
+                repeat = true
+                binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.purple_500))
+            }
+            else{
+                repeat = false
+                binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.cool_pink))
+            }
+        }
     }
     private fun setlayout(){
         Glide.with(this)
@@ -64,6 +77,8 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             .apply(RequestOptions().placeholder(R.mipmap.ic_launcher).centerCrop())
             .into(binding.songImgPA)
         binding.songNamePA.text = musicListPA[songPosition].title
+
+        if (repeat) binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.purple_500))
     }
 
     private fun createMediaPlayer(){
@@ -118,13 +133,21 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     private fun prevNextSong(increment:Boolean){
         if (increment){
+            repeat =false
             setSongPosition(increment = true)
             setlayout()
             createMediaPlayer()
+            binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.cool_pink))
+            repeat = true
+            binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.purple_500))
         }else{
+            repeat = false
             setSongPosition(increment = false)
             setlayout()
             createMediaPlayer()
+            binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.cool_pink))
+            repeat = true
+            binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.purple_500))
         }
     }
 

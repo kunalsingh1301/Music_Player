@@ -55,7 +55,6 @@ class NotificationReciever: BroadcastReceiver() {
                 PlayerActivity.musicService = null
                 exitProcess(1)
             }
-
         }
     }
 
