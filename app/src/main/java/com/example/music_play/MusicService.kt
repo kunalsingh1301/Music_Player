@@ -6,7 +6,9 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.os.Binder
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 
@@ -15,6 +17,8 @@ class MusicService: Service() {
     var mediaPlayer: MediaPlayer? = null
 
     private lateinit var mediaSession: MediaSessionCompat
+
+    private lateinit var runnable: Runnable
 
     override fun onBind(intent: Intent?): IBinder? {
         mediaSession = MediaSessionCompat(baseContext,"My_music")
@@ -75,10 +79,19 @@ class MusicService: Service() {
             PlayerActivity.isPlaying = true
             PlayerActivity.binding.playpauseBtnPA.setIconResource(R.drawable.pause_icon)
             PlayerActivity.musicService!!.shownotification(R.drawable.pause_icon)
-            PlayerActivity.binding.tvseekbarstart.text = formatduration(PlayerActivity.musicService!!.mediaPlayer!!.currentPosition.toLong())
-            PlayerActivity.binding.tvseekbarend.text = formatduration(PlayerActivity.musicService!!.mediaPlayer!!.duration.toLong())
+            PlayerActivity.binding.tvseekbarstart.text = formatduration(mediaPlayer!!.currentPosition.toLong())
+            PlayerActivity.binding.tvseekbarend.text = formatduration(mediaPlayer!!.duration.toLong())
             PlayerActivity.binding.seekbarPA.progress = 0
-            PlayerActivity.binding.seekbarPA.max = PlayerActivity.musicService!!.mediaPlayer!!.duration
+            PlayerActivity.binding.seekbarPA.max = mediaPlayer!!.duration
         }catch (e:Exception){return}
+    }
+
+    fun seekbarsetup(){
+        runnable = Runnable {
+            PlayerActivity.binding.tvseekbarstart.text = formatduration(mediaPlayer!!.currentPosition.toLong())
+            PlayerActivity.binding.seekbarPA.progress = mediaPlayer!!.currentPosition
+            Handler(Looper.getMainLooper()).postDelayed(runnable,200)
+        }
+        Handler(Looper.getMainLooper()).postDelayed(runnable,0)
     }
 }
