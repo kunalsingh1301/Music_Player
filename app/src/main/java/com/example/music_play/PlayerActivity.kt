@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.music_play.databinding.ActivityPlayerBinding
 
-class PlayerActivity : AppCompatActivity(), ServiceConnection {
+class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCompletionListener {
 
     companion object{
         lateinit var musicListPA:ArrayList<music>
@@ -80,6 +80,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
             binding.tvseekbarend.text = formatduration(musicService!!.mediaPlayer!!.duration.toLong())
             binding.seekbarPA.progress = 0
             binding.seekbarPA.max = musicService!!.mediaPlayer!!.duration
+            musicService!!.mediaPlayer!!.setOnCompletionListener(this)
         }catch (e:Exception){return}
     }
 
@@ -133,9 +134,21 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
         musicService = binder.currentservice()
         createMediaPlayer()
         musicService!!.seekbarsetup()
+//        musicService!!.mediaPlayer!!.setOnCompletionListener { this }
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
         musicService = null
+    }
+
+    /**
+     * Called when the end of a media source is reached during playback.
+     *
+     * @param mp the MediaPlayer that reached the end of the file
+     */
+    override fun onCompletion(mp: MediaPlayer?) {
+        setSongPosition(true)
+        createMediaPlayer()
+        try{setlayout()}catch (e:Exception){return}
     }
 }
