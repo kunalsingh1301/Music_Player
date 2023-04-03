@@ -73,6 +73,8 @@ class NotificationReciever: BroadcastReceiver() {
     }
 
     private fun prevnextSong(increment:Boolean,context: Context?) {
+        PlayerActivity.repeat = false
+        PlayerActivity.binding.repeatBtnPA.setColorFilter(R.color.cool_pink)
         setSongPosition(increment = increment)
         PlayerActivity.musicService!!.createMediaPlayer()
         Glide.with(context!!)

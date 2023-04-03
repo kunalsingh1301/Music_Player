@@ -20,7 +20,7 @@ class MusicService: Service() {
 
     private lateinit var runnable: Runnable
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder {
         mediaSession = MediaSessionCompat(baseContext,"My_music")
         return mybinder
     }
@@ -66,6 +66,8 @@ class MusicService: Service() {
             .addAction(R.drawable.next_icon, "Next_Icon",nextintentpending)
             .addAction(R.drawable.exit_to_app_icon, "Exit_Icon",exitintentpending)
             .build()
+
+
         startForeground(13,notification)
     }
 

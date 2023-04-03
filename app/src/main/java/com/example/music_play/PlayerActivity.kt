@@ -138,16 +138,12 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             setlayout()
             createMediaPlayer()
             binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.cool_pink))
-            repeat = true
-            binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.purple_500))
         }else{
             repeat = false
             setSongPosition(increment = false)
             setlayout()
             createMediaPlayer()
             binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.cool_pink))
-            repeat = true
-            binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this,R.color.purple_500))
         }
     }
 
